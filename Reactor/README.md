@@ -12,13 +12,15 @@
 
 This box was rooted through three main stages:
 
-1. Remote Code Execution on a Node.js web app (port 3000) via CVE-2025-55182, using a malicious executable script delivered through `react2shell.mjs`.
-2. Lateral movement from `node` to `engineer` by extracting and cracking a leaked MD5 hash from a hijacked SQLite database.
-3. Privilege escalation from `engineer` to `root` by abusing the Node.js V8 Inspector protocol exposed locally on port 9229.
+1. Remote Code Execution on a Node.js web app (port 3000) via [CVE-2025-55182](https://github.com/Saturate/CVE-2025-55182-react2shell/tree/main), using a malicious executable script delivered through `react2shell.mjs`.
+   
+3. Lateral movement from `node` to `engineer` by extracting and cracking a leaked MD5 hash from a hijacked SQLite database.
+   
+5. Privilege escalation from `engineer` to `root` by abusing the Node.js V8 Inspector protocol exposed locally on port 9229.
 
 ## Initial Access (as node)
 
-The web server on port 3000 was running an application vulnerable to CVE-2025-55182. A public Node.js exploit, `react2shell.mjs`, was used to trigger RCE.
+The web server on port 3000 was running an application vulnerable to [CVE-2025-55182](https://github.com/Saturate/CVE-2025-55182-react2shell/tree/main). A public Node.js exploit, `react2shell.mjs`, was used to trigger RCE.
 
 ### Payload issues with msfvenom
 
