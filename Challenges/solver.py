@@ -2,7 +2,6 @@
 import socket
 import re
 import sys
-import time
 
 ROUNDS = 100
 
@@ -39,8 +38,8 @@ class Conn:
 
 def parse_round(text):
     """
-    Parsea un bloque de ronda y devuelve el numero de jugador ganador (str).
-    Formato esperado por linea:
+    Parses a round block and returns the winning player's number (str).
+    Expected line format:
     Player 1: 3 5 2 6 ...
     """
     players = {}
@@ -48,14 +47,14 @@ def parse_round(text):
         m = re.match(r"Player (\d+): (.+)", line.strip())
         if m:
             pnum = int(m.group(1))
-            dices = [int(x) for x in m.group(2).split()]
-            players[pnum] = sum(dices)
+            dice = [int(x) for x in m.group(2).split()]
+            players[pnum] = sum(dice)
 
     if not players:
         return None
 
     max_score = max(players.values())
-  
+    
     winners = [p for p, s in players.items() if s == max_score]
     winner = max(winners)
     return str(winner)
@@ -67,7 +66,7 @@ def main():
         sys.argv.remove("--quiet")
 
     if len(sys.argv) != 3:
-        print(f"Uso: {sys.argv[0]} <host> <port> [--quiet]")
+        print(f"Usage: {sys.argv[0]} <host> <port> [--quiet]")
         sys.exit(1)
     host = sys.argv[1]
     port = int(sys.argv[2])
@@ -83,23 +82,23 @@ def main():
     for i in range(ROUNDS):
         block = conn.recv_until("> ")
         if not quiet:
-            print(f"--- Ronda {i+1} ---")
+            print(f"--- Round {i+1} ---")
             print(block)
         elif (i + 1) % 10 == 0:
-            print(f"[progreso] ronda {i+1}/{ROUNDS}")
+            print(f"[progress] round {i+1}/{ROUNDS}")
 
         winner = parse_round(block)
         if winner is None:
-            print("[!] No se pudo parsear la ronda, abortando.")
+            print("[!] Could not parse the round, aborting.")
             print(conn.recv_until("", timeout=3))
             conn.close()
             sys.exit(1)
 
         if not quiet:
-            print(f"[+] Respondiendo jugador ganador: {winner}")
+            print(f"[+] Answering winning player: {winner}")
         conn.send_line(winner)
 
-    print("--- Esperando resultado final ---")
+    print("--- Waiting for final result ---")
     conn.sock.settimeout(15)
     final = b""
     try:
