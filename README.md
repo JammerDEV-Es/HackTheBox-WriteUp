@@ -19,6 +19,7 @@
 ### - [Cap (Linux) (10.10.10.245)](https://github.com/JammerDEV-Es/HackTheBox-ReviewAndWriteup/tree/main/Cap)
 ### - [Eighteen (Windows) (10.10.11.95)](https://github.com/JammerDEV-Es/HackTheBox-ReviewAndWriteup/tree/main/Eighteen)
 ### - [Monitors Four (Windows) (10.10.11.99)](https://github.com/JammerDEV-Es/HackTheBox-ReviewAndWriteup/tree/main/Monitors%20Four)
+### - [Monitors Four (Windows) (10.129.245.214)](https://github.com/JammerDEV-Es/HackTheBox-WriteUp/blob/main/Reactor/)
 
 ##
 
