@@ -1,4 +1,4 @@
-# Lucky Dice — HackTheBox Writeup
+# Lucky Dice Challenge 
 
 
 ## Overview
