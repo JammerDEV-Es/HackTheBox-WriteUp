@@ -1,11 +1,12 @@
 
-# Reactor (Hack The Box) Writeup
+# Reactor (Easy) 🟢
 
-### **Target IP:** 10.129.245.214 
+<div align="center">
+</div>
+<img width="256" height="256" src="https://github.com/JammerDEV-Es/HackTheBox-WriteUp/blob/main/Reactor/IMG/reactor.png">
+</p>
 
-### **Difficulty:** Easy
 
-### **Initial Vulnerability:** CVE-2025-55182 (Remote Command Execution in Node.js)
 
 ## Summary
 
@@ -41,7 +42,13 @@ The exploit was launched with a temporary local server on port 8888, from which 
 
 A reverse shell connection was received on port 4444 as the user `node`.
 
+
 ## Lateral Movement (node to engineer)
+
+<div align="center">
+</div>
+<img width="1024" height="1024" src="https://github.com/JammerDEV-Es/HackTheBox-WriteUp/blob/main/Reactor/IMG/password%20hash.png">
+</p>
 
 Inspecting the web application's files revealed an SQLite database. Extracting strings from it exposed a `users` table with a stored credential:
 
@@ -60,8 +67,12 @@ john --format=Raw-MD5 --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
 Switching to the `engineer` user:
 
 ```bash
-su engineer  # Password: reactor1
+ssh engineer@reactor.htb  # Password: reactor1
 ```
+<div align="center">
+</div>
+<img width="800" height="800" src="https://github.com/JammerDEV-Es/HackTheBox-WriteUp/blob/main/Reactor/IMG/reactorssh.PNG">
+</p>
 
 At this point the user flag was readable at `/home/engineer/user.txt`.
 
@@ -84,6 +95,10 @@ With the port forwarded locally, the native Node debugger was used to connect to
 ```bash
 node inspect 127.0.0.1:9229
 ```
+<div align="center">
+</div>
+<img width="800" height="800" src="https://github.com/JammerDEV-Es/HackTheBox-WriteUp/blob/main/Reactor/IMG/node.PNG">
+</p>
 
 From the `debug>` prompt, the process's global execution object was abused to set the SUID bit on `/bin/bash`:
 
